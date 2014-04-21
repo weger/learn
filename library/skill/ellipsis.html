@@ -2,21 +2,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>grid</title>
+    <title>文本超长截断</title>
     <style type="text/css">
-        .box{
-
+        .ellipsis{
+            width:100px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
             border:1px solid red;
+        }
+        .refer{
+            position:absolute;
+            right:0;
+            bottom:0;
+            color:gray;
+            font-size: 11px;
+            padding:6px;
         }
     </style>
 </head>
 <body>
-    <h1>IE6 IE7(Q) IE8(Q)下最小高度实现[Q为浏览器quick模式]：</h1>
-    <div class="box">
-        最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度最小高度
-    </div>
-    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+    <h1>文本超长截断 css实现</h1>
+    <div class="ellipsis">这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容</div>
 
-    <div class="refer">http://www.w3help.org/zh-cn/causes/RD8015</div>
+    <div class="refer">js实现：https://github.com/kissygalleryteam/multiellipsis/blob/master/1.0/index.js</div>
 </body>
 </html>
