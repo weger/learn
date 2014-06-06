@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <title>类式继承 借用+原型实现</title>
+    <style type="text/css">
+        p{line-height:1.5;}
+        h2{margin:0;padding:10px 0;border-bottom:1px solid #f1f1f1;}
+
+
+        #log{margin-bottom:40px;}
+        #log .l{padding:4px;}
+        #log .l:nth-child(2n ){background:#f1f1f1;}
+
+        .good,
+        .bad,
+        .tips{padding:4px;margin-bottom:10px}
+
+        .good{background:rgb(226, 226, 255)}
+        .bad{background:rgb(226, 226, 226)}
+        .tips{background:rgb(255, 255, 229)}
+    </style>
+</head>
+<body>
+    <div id="log"></div>
+    <div class="good">
+        <h2>优点：</h2>
+        <p>
+            获得的是父对象自身成员的副本<br />
+            指向父对象原型实现的方法的引用<br />
+            子对象可以将任意参数传递给父构造函数
+        </p>
+    </div>
+    <div class="bad">
+        <h2>缺点：</h2>
+        <p>效率差，父构造函数被调用了两次<br />自身属性被继承两次</p>
+    </div>
+    <script type="text/javascript">
+        function log(msg){
+            var divNode = document.createElement("div");
+            var msgEl = document.getElementById("log");
+
+            divNode.className = "l";
+            divNode.innerText =  msg;
+
+            msgEl.appendChild(divNode);
+        }
+
+        // 借用构造函数  
+        function Parent(name){
+            this.name = name || "parent";
+        }
+
+        Parent.prototype.say = function() {
+            return this.name;
+        };
+
+        function Child(name) {
+            // 获取Parent的this下得公共方法和属性的副本
+            Parent.apply(this, arguments);
+        }
+        Child.prototype = new Parent();
+
+
+        var kid = new Child("kid");
+        log(kid.say());
+        // 删除的是Child的副本
+        delete kid.name;
+        log(kid.name);
+    </script>
+</body>
+</html>

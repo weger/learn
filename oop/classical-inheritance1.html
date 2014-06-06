@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+    <title>类式继承 默认模式</title>
+    <style type="text/css">
+        p{line-height:1.5;}
+        h2{margin:0;padding:10px 0;border-bottom:1px solid #f1f1f1;}
+
+
+        #log{margin-bottom:40px;}
+        #log .l{padding:4px;}
+        #log .l:nth-child(2n ){background:#f1f1f1;}
+
+        .good,
+        .bad,
+        .tips{padding:4px;margin-bottom:10px}
+
+        .good{background:rgb(226, 226, 255)}
+        .bad{background:rgb(226, 226, 226)}
+        .tips{background:rgb(255, 255, 229)}
+    </style>
+</head>
+<body>
+    <div id="log"></div>
+    <div class="good">
+        <h2>优点：</h2>
+        <p>实现简单</p>
+    </div>
+    <div class="bad">
+        <h2>缺点：</h2>
+        <p>不支持将参数传递到子构造函数中<br />Child.prototype.constructor不再是Child,原型连被破坏</p>
+    </div>
+    <div class="tips">
+        <ol>
+            <li>对于构造函数的一般经验法则是：应该将可复用的成员添加到原型中</li>
+        </ol>
+    </div>
+    <script type="text/javascript">
+        function log(msg){
+            var divNode = document.createElement("div");
+            var msgEl = document.getElementById("log");
+
+            divNode.className = "l";
+            divNode.innerText =  msg;
+
+
+            msgEl.appendChild(divNode);
+        }
+
+        // 类式继承  模式模式
+        function Parent(){
+            this.name = "parent";
+        }
+
+        Parent.prototype.say = function() {
+            return this.name;
+        };
+
+        function Child (name) {
+            this.name = name;
+        }
+
+        function inherit(C, P){
+            C.prototype = new P();
+        }
+
+        inherit(Child, Parent);
+
+        var kid = new Child();
+        log(kid.say());
+        kid.name = "kid";
+        log(kid.say());
+        var s = new Child("s");
+        log(s.say());
+    </script>
+</body>
+</html>

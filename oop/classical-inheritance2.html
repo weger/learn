@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <title>类式继承 借用构造函数</title>
+    <style type="text/css">
+        p{line-height:1.5;}
+        h2{margin:0;padding:10px 0;border-bottom:1px solid #f1f1f1;}
+
+
+        #log{margin-bottom:40px;}
+        #log .l{padding:4px;}
+        #log .l:nth-child(2n ){background:#f1f1f1;}
+
+        .good,
+        .bad,
+        .tips{padding:4px;margin-bottom:10px}
+
+        .good{background:rgb(226, 226, 255)}
+        .bad{background:rgb(226, 226, 226)}
+        .tips{background:rgb(255, 255, 229)}
+    </style>
+</head>
+<body>
+    <div id="log"></div>
+    <div class="good">
+        <h2>优点：</h2>
+        <p>获得的是父对象自身成员的副本<br />可以实现多重继承</p>
+    </div>
+    <div class="bad">
+        <h2>缺点：</h2>
+        <p>无法从原型中继承任何东西<br />继承是一次性的操作，仅仅复制父对象的属性并将其作为子对象自身的属性</p>
+    </div>
+    <script type="text/javascript">
+        function log(msg){
+            var divNode = document.createElement("div");
+            var msgEl = document.getElementById("log");
+
+            divNode.className = "l";
+            divNode.innerText =  msg;
+
+            msgEl.appendChild(divNode);
+        }
+
+        // 借用构造函数  
+        function Parent(name){
+            this.name = name || "parent";
+        }
+
+        Parent.prototype.say = function() {
+            return this.name;
+        };
+
+        function Child(name) {
+            Parent.apply(this, arguments);
+        }
+
+
+        var kid = new Child("kid");
+        // 原型上得方法并没有找到，只能继承Parent的this上得属性和方法
+        log(typeof kid.say);
+        log(kid.name);
+    </script>
+</body>
+</html>
